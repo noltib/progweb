@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Editar Fabricante</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {% for f in fabricanteForm %}
+
+        <div class="form-group">
+
+            {{ f.label }}
+
+            {{ f }}
+
+            {% for error in f.errors %}
+
+            <div class="invalid-feedback" style="display:block">
+
+                {{ error }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endfor %}
+
+        <br>
+
+        <button class="btn btn-primary">
+
+            Salvar
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

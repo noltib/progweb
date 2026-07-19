@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Excluir Fabricante</h2>
+
+    <p>
+
+        Deseja realmente excluir
+
+        <b>
+
+            {{ fabricante.Fabricante }}
+
+        </b>?
+
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button class="btn btn-danger">
+
+            Excluir
+
+        </button>
+
+        <a href="/fabricante/" class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Editar Categoria</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <label>Categoria</label>
+
+            <input type="text" name="Categoria" value="{{categoria.Categoria}}" class="form-control">
+
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary">
+
+            Salvar
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

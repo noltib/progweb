@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Excluir Categoria</h2>
+
+    <p>
+
+        Deseja realmente excluir
+
+        <b>
+
+            {{categoria.Categoria}}
+
+        </b>?
+
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button class="btn btn-danger">
+
+            Excluir
+
+        </button>
+
+        <a href="/categoria/" class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}
