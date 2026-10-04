@@ -4,3 +4,4 @@ from .UsuarioUrls import *
 from .HomeUrls import *
 from .CategoriaUrls import *
 from .FabricanteUrls import *
+from .AuthUrls import *
