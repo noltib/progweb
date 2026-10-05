@@ -10,28 +10,39 @@
     <div class="alert alert-info">
       <h3>Carrinho de Compras</h3>
     </div>
-    <div class="row">
-      <a class="col-md-4">Produto</a>
-      <a class="col-md-2">Quantidade</a>
-      <a class="col-md-2">Preço</a>
-      <a class="col-md-2">Total</a>
+    <div class="row font-weight-bold mb-2">
+      <div class="col-md-4">Produto</div>
+      <div class="col-md-3">Quantidade</div>
+      <div class="col-md-2">Preço</div>
+      <div class="col-md-2">Total</div>
+      <div class="col-md-1">Ação</div>
     </div>
     {% if itens %}
       {% for item in itens %} 
-        <div class="row">
-          <a class="col-md-4"> {{ item.produto.Produto }}</a>
-          <a class="col-md-2"> {{ item.quantidade }}</a>
-          <a class="col-md-2">R$ {{ item.preco|floatformat:2 }}</a>
-          <a class="col-md-2">R$ {{ item.total }}</a>
-          <a class="col-md-2">
+        <div class="row align-items-center mb-2 py-2 border-bottom">
+          <div class="col-md-4">{{ item.produto.Produto }}</div>
+          <div class="col-md-3 d-flex align-items-center">
+            <a href="{% url 'diminuir_carrinhoitem' item.id %}" class="btn btn-sm btn-outline-secondary mr-2">
+              <i class="fa fa-minus"></i>
+            </a>
+            <span class="font-weight-bold mx-2">{{ item.quantidade }}</span>
+            <a href="{% url 'aumentar_carrinhoitem' item.id %}" class="btn btn-sm btn-outline-secondary ml-2">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+          <div class="col-md-2">R$ {{ item.preco|floatformat:2 }}</div>
+          <div class="col-md-2">R$ {{ item.total|floatformat:2 }}</div>
+          <div class="col-md-1">
             <form method="POST" action="{% url 'remover_carrinhoitem' item.id %}" style="display:inline;">
               {% csrf_token %}
-              <button type="submit" class="btn btn-danger">Excluir</button>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fa fa-trash"></i> Excluir
+              </button>
             </form>
-          </a>
+          </div>
         </div>
       {% endfor %}
-      <h5 class="mt-4">Total: R$ {{ carrinho.total|floatformat:2 }}</h5>
+      <h5 class="mt-4 font-weight-bold">Total: R$ {{ carrinho.total|floatformat:2 }}</h5>
       <div class="mt-4">
         <a href="{% url 'home' %}" class="btn btn-secondary">Voltar à loja</a>
         <a href="{% url 'confirmar_carrinho' %}" class="btn btn-success">Finalizar Compra</a>

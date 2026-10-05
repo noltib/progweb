@@ -4,6 +4,8 @@ from loja.views.CarrinhoView import (
     list_carrinho_view,
     confirmar_carrinho_view,
     remover_item_view,
+    aumentar_item_view,
+    diminuir_item_view,
 )
 
 urlpatterns = [
@@ -11,4 +13,6 @@ urlpatterns = [
     path("<int:produto_id>", create_carrinhoitem_view, name='create_carrinhoitem'),
     path("confirmar", confirmar_carrinho_view, name='confirmar_carrinho'),
     path("remover/<int:item_id>/", remover_item_view, name='remover_carrinhoitem'),
+    path("aumentar/<int:item_id>/", aumentar_item_view, name='aumentar_carrinhoitem'),
+    path("diminuir/<int:item_id>/", diminuir_item_view, name='diminuir_carrinhoitem'),
 ]

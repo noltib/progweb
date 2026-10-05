@@ -87,23 +87,23 @@ def list_carrinho_view(request):
 def confirmar_carrinho_view(request):
     print('confirmar_carrinho_view')
     carrinho = None
+    itens = None
     # Tenta pegar o carrinho da sessão ou cria um novo carrinho
     carrinho_id = request.session.get('carrinho_id')
     if carrinho_id:
         print('carrinho: ' + str(carrinho_id))
         # Obtém o carrinho do usuário
         carrinho = Carrinho.objects.filter(id=carrinho_id).first()
-        # Obtém o usuário
-        usuario = get_object_or_404(Usuario, user=request.user)
-        print('Usuario: ' + str(usuario))
-        if usuario and carrinho:
-            carrinho.user_id = usuario.id
+        if carrinho:
+            carrinho.user = request.user
             carrinho.situacao = 1
             carrinho.confirmado_em = timezone.make_aware(datetime.today())
             carrinho.save()
-            print('carrinho salvo')
+            itens = CarrinhoItem.objects.filter(carrinho=carrinho)
+            print('carrinho salvo com itens: ' + str(itens.count()))
     context = {
-        'carrinho': carrinho
+        'carrinho': carrinho,
+        'itens': itens
     }
     return render(request, 'carrinho/carrinho-confirmado.html', context=context)
 
@@ -115,4 +115,27 @@ def remover_item_view(request, item_id):
     carrinho_id = request.session.get('carrinho_id')
     if carrinho_id == item.carrinho.id:
         item.delete()
+    return redirect('/carrinho')
+
+
+# Função para aumentar a quantidade de um item do carrinho
+def aumentar_item_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    carrinho_id = request.session.get('carrinho_id')
+    if carrinho_id == item.carrinho.id:
+        item.quantidade += 1
+        item.save()
+    return redirect('/carrinho')
+
+
+# Função para diminuir a quantidade de um item do carrinho
+def diminuir_item_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    carrinho_id = request.session.get('carrinho_id')
+    if carrinho_id == item.carrinho.id:
+        if item.quantidade > 1:
+            item.quantidade -= 1
+            item.save()
+        else:
+            item.delete()
     return redirect('/carrinho')

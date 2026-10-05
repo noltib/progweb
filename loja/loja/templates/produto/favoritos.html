@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Meus Favoritos{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+<div id="content">
+    <div class="container">
+        <div class="alert alert-info">
+            <h3><i class="fa fa-heart text-danger"></i> Meus Produtos Favoritos</h3>
+        </div>
+        {% if produtos %}
+        <div class="row">
+            {% for prod in produtos %}
+            <div class="col-xs-9 col-md-3 col-lg-3">
+                <div class="card mb-4">
+                    <div class="image-circle" style="background-image: url('/media/{{prod.image}}');"></div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{prod.Produto}}</h5>
+                        <p class="card-text text-muted font-weight-bold">R$ {{ prod.preco|floatformat:2 }}</p>
+                        <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary btn-card mb-1">
+                            <i class="fa fa-search"></i> Ver
+                        </a>
+                        <a href="{% url 'create_carrinhoitem' prod.id %}" class="btn btn-success btn-card mb-1">
+                            <i class="fa fa-shopping-cart"></i> Comprar
+                        </a>
+                        <a href="{% url 'favoritar_produto' prod.id %}" class="btn btn-danger btn-card mb-1">
+                            <i class="fa fa-heart"></i> Remover
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning mt-4" role="alert">
+            Você ainda não possui produtos favoritados.
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-primary mt-3">Ir à loja</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

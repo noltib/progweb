@@ -33,11 +33,16 @@
                     <div class="image-circle" style="background-image: url('/media/{{prod.image}}');"></div>
                     <div class="card-body">
                         <h5 class="card-title">{{prod.Produto}}</h5>
-                        <a href="{% url 'home' %}" class="btn btn-primary btn-card">
+                        <p class="card-text text-muted font-weight-bold">R$ {{ prod.preco|floatformat:2 }}</p>
+                        <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary btn-card">
                             <i class="fa fa-search"></i> Ver
                         </a>
-                        <button class="btn btn-warning btn-card">
-                            <i class="fa fa-heart"></i> Favoritar</button>
+                        <a href="{% url 'create_carrinhoitem' prod.id %}" class="btn btn-success btn-card">
+                            <i class="fa fa-shopping-cart"></i> Comprar
+                        </a>
+                        <a href="{% url 'favoritar_produto' prod.id %}" class="btn {% if prod.id in favoritos_ids %}btn-danger{% else %}btn-warning{% endif %} btn-card">
+                            <i class="fa fa-heart"></i> {% if prod.id in favoritos_ids %}Favorito{% else %}Favoritar{% endif %}
+                        </a>
                     </div>
                 </div>
             </div>
