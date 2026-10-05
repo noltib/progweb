@@ -2,10 +2,12 @@ from datetime import timedelta
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 
 from loja.models import Categoria, Fabricante, Produto
 
 
+@login_required
 def edit_produto_view(request, id=None):
     produtos = Produto.objects.all()
     if id is not None:
